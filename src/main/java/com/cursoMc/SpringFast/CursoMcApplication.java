@@ -12,6 +12,7 @@ import com.cursoMc.SpringFast.domain.Category;
 import com.cursoMc.SpringFast.domain.City;
 import com.cursoMc.SpringFast.domain.Cliente;
 import com.cursoMc.SpringFast.domain.Endereco;
+import com.cursoMc.SpringFast.domain.ItemPedido;
 import com.cursoMc.SpringFast.domain.Pagamento;
 import com.cursoMc.SpringFast.domain.PagamentoBoleto;
 import com.cursoMc.SpringFast.domain.PagamentoCartao;
@@ -24,6 +25,7 @@ import com.cursoMc.SpringFast.repositories.CategoryRepository;
 import com.cursoMc.SpringFast.repositories.CityRepository;
 import com.cursoMc.SpringFast.repositories.ClienteRepository;
 import com.cursoMc.SpringFast.repositories.EnderecoRepository;
+import com.cursoMc.SpringFast.repositories.ItemPedidoRepository;
 import com.cursoMc.SpringFast.repositories.PagamentoRepository;
 import com.cursoMc.SpringFast.repositories.PedidoRepository;
 import com.cursoMc.SpringFast.repositories.ProductRepository;
@@ -56,6 +58,8 @@ public class CursoMcApplication implements CommandLineRunner {
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoMcApplication.class, args);
@@ -91,6 +95,10 @@ public class CursoMcApplication implements CommandLineRunner {
 		Pagamento pgt1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		Pagamento pgt2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, df.parse("31/05/2020 23:59"), null);
 		
+		ItemPedido ip1 = new ItemPedido(ped1, pro1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, pro3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, pro2, 100.00, 1, 800.00);
+		
 		ped1.setPagamento(pgt1);
 		ped2.setPagamento(pgt2);
 		
@@ -110,6 +118,15 @@ public class CursoMcApplication implements CommandLineRunner {
 		
 		cl1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		pro1.getItens().addAll(Arrays.asList(ip1));
+		pro2.getItens().addAll(Arrays.asList(ip3));
+		pro3.getItens().addAll(Arrays.asList(ip2));
+		
+		
+		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(pro1, pro2, pro3));
 
@@ -121,6 +138,8 @@ public class CursoMcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
