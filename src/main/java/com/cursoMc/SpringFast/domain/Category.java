@@ -2,13 +2,12 @@ package com.cursoMc.SpringFast.domain;
 
 import java.io.Serializable;
 
-public class Category  implements Serializable{
+public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String nome;
 
-	
 	// Métodos Construtores
 	public Category() {
 
@@ -20,8 +19,7 @@ public class Category  implements Serializable{
 		this.nome = nome;
 	}
 
-	
-	// getters e setters 
+	// getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -37,8 +35,8 @@ public class Category  implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	// Método hashCode 
+
+	// Método hashCode
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,8 +45,7 @@ public class Category  implements Serializable{
 		return result;
 	}
 
-	
-	// Método equals 
+	// Método equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -66,7 +63,4 @@ public class Category  implements Serializable{
 		return true;
 	}
 
-	
-	
-	
 }

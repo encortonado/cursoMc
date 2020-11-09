@@ -13,20 +13,17 @@ import com.cursoMc.SpringFast.domain.Category;
 @RequestMapping(value = "/categories")
 public class CategoryResources {
 
-	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Category> listar() {
-		
+
 		Category cat1 = new Category(1, "Informática");
 		Category cat2 = new Category(2, "Escritório");
-		
+
 		List<Category> lista = new ArrayList<>();
 		lista.add(cat1);
 		lista.add(cat2);
-		
-		
-		
+
 		return lista;
 	}
-	
+
 }
