@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.cursoMc.SpringFast.domain.Category;
 import com.cursoMc.SpringFast.repositories.CategoryRepository;
 
+import com.cursoMc.SpringFast.services.exceptions.ObjectNotFoundException;
+
 @Service
 public class CategoryService {
 
@@ -17,8 +19,9 @@ public class CategoryService {
 	public Category find(Integer id) {
 
 		Optional<Category> obj = repos.findById(id);
-
-		return obj.orElse(null);
+		
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));
 	}
 
 }
