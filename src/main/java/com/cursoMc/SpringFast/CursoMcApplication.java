@@ -1,5 +1,6 @@
 package com.cursoMc.SpringFast;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.cursoMc.SpringFast.domain.Category;
 import com.cursoMc.SpringFast.domain.City;
 import com.cursoMc.SpringFast.domain.Cliente;
 import com.cursoMc.SpringFast.domain.Endereco;
+import com.cursoMc.SpringFast.domain.Pagamento;
+import com.cursoMc.SpringFast.domain.PagamentoBoleto;
+import com.cursoMc.SpringFast.domain.PagamentoCartao;
+import com.cursoMc.SpringFast.domain.Pedido;
 import com.cursoMc.SpringFast.domain.Product;
 import com.cursoMc.SpringFast.domain.States;
+import com.cursoMc.SpringFast.domain.enums.EstadoPagamento;
 import com.cursoMc.SpringFast.domain.enums.TipoCliente;
 import com.cursoMc.SpringFast.repositories.CategoryRepository;
 import com.cursoMc.SpringFast.repositories.CityRepository;
 import com.cursoMc.SpringFast.repositories.ClienteRepository;
 import com.cursoMc.SpringFast.repositories.EnderecoRepository;
+import com.cursoMc.SpringFast.repositories.PagamentoRepository;
+import com.cursoMc.SpringFast.repositories.PedidoRepository;
 import com.cursoMc.SpringFast.repositories.ProductRepository;
 import com.cursoMc.SpringFast.repositories.StatesRepository;
 
@@ -41,6 +49,12 @@ public class CursoMcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -69,6 +83,16 @@ public class CursoMcApplication implements CommandLineRunner {
 		Endereco en1 = new Endereco(null, "Rua das Dores", "300", "Apto 303", "Jardins", "38220834", cl1, ct1);
 		Endereco en2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cl1, ct2);
 		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, df.parse("28/02/2020 14:22"), cl1, en1);
+		Pedido ped2 = new Pedido(null, df.parse("30/04/2020 11:54"), cl1, en2);
+		
+		Pagamento pgt1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		Pagamento pgt2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, df.parse("31/05/2020 23:59"), null);
+		
+		ped1.setPagamento(pgt1);
+		ped2.setPagamento(pgt2);
 		
 		// adicionando a ligação dos valores de produto a suas respectivas categorias
 		cat1.getProdutos().addAll(Arrays.asList(pro1, pro2, pro3));
@@ -84,6 +108,8 @@ public class CursoMcApplication implements CommandLineRunner {
 		cl1.getTelefones().addAll(Arrays.asList("27363323", "93838383")); // adiciona os numeros ao telefone a partir do cliente gerado
 		cl1.getEnderecos().addAll(Arrays.asList(en1, en2));
 		
+		cl1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(pro1, pro2, pro3));
 
@@ -92,6 +118,9 @@ public class CursoMcApplication implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(cl1));
 		enderecoRepository.saveAll(Arrays.asList(en1, en2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2));
 	}
 
 }
