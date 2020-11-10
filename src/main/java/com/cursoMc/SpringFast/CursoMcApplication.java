@@ -70,6 +70,14 @@ public class CursoMcApplication implements CommandLineRunner {
 		// instanciando objetos
 		Category cat1 = new Category(null, "Informática");
 		Category cat2 = new Category(null, "Escritório");
+		Category cat3 = new Category(null, "Computadores");
+		Category cat4 = new Category(null, "Servidores");
+		Category cat5 = new Category(null, "Roupa e Moda");
+		Category cat6 = new Category(null, "Brinquedotecaria");
+		Category cat7 = new Category(null, "Cervejaria");
+		Category cat8 = new Category(null, "Almoxarifados");
+		Category cat9 = new Category(null, "Locadoura");
+		Category cat10 = new Category(null, "Móveis de sala de estar");
 
 		Product pro1 = new Product(null, "Computador", 2000.00);
 		Product pro2 = new Product(null, "Impressora", 800.00);
@@ -127,7 +135,7 @@ public class CursoMcApplication implements CommandLineRunner {
 		
 		
 		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
 		produtoRepository.saveAll(Arrays.asList(pro1, pro2, pro3));
 
 		estadoRepository.saveAll(Arrays.asList(st1, st2));
