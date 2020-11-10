@@ -22,7 +22,7 @@ public class CategoryResources {
 	private CategoryService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> finder(@PathVariable Integer id) {
+	public ResponseEntity<Category> finder(@PathVariable Integer id) {
 
 		Category obj = service.find(id);
 
@@ -39,4 +39,19 @@ public class CategoryResources {
 		
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Category obj, @PathVariable Integer id) {
+		obj.setId(id);
+		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 }
+
+
+
+
+
+
+

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.cursoMc.SpringFast.domain.Category;
 import com.cursoMc.SpringFast.repositories.CategoryRepository;
-
 import com.cursoMc.SpringFast.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,4 +28,20 @@ public class CategoryService {
 		obj.setId(null);
 		return repos.save(obj);
 	}
+	
+	public Category update(Category obj) {
+		find(obj.getId());
+		return repos.save(obj);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
