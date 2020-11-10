@@ -3,10 +3,12 @@ package com.cursoMc.SpringFast.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.cursoMc.SpringFast.domain.Category;
 import com.cursoMc.SpringFast.repositories.CategoryRepository;
+import com.cursoMc.SpringFast.services.exceptions.DataIntegrityException;
 import com.cursoMc.SpringFast.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,6 +34,18 @@ public class CategoryService {
 	public Category update(Category obj) {
 		find(obj.getId());
 		return repos.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repos.deleteById(id);
+			
+		} catch (DataIntegrityViolationException e) {
+			
+			throw new DataIntegrityException("Não é possivel excluir uma categoria cujo possui produtos.");
+			
+		}
 	}
 	
 }
