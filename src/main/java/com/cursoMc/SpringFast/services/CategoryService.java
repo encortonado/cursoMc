@@ -1,5 +1,6 @@
 package com.cursoMc.SpringFast.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,10 @@ public class CategoryService {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria cujo possui produtos.");
 			
 		}
+	}
+	
+	public List<Category> findAll() {
+		return repos.findAll();
 	}
 	
 }
