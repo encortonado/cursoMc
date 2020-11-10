@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +37,12 @@ public class CategoryResources {
 
 	}
 
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Category obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) {
 		// cria uma forma de passar o id para a url e sendo através de uma boa pratica
 		// de uso, além de inserir dado na tabela
+		Category obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -46,7 +50,8 @@ public class CategoryResources {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Category obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+		Category obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 
