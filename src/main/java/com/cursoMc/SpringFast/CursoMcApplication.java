@@ -82,7 +82,15 @@ public class CursoMcApplication implements CommandLineRunner {
 		Product pro1 = new Product(null, "Computador", 2000.00);
 		Product pro2 = new Product(null, "Impressora", 800.00);
 		Product pro3 = new Product(null, "Mouse", 80.00);
-
+		Product pro4 = new Product(null, "Mesa de Escritorio", 300.00);
+		Product pro5 = new Product(null, "Toalha", 50.00);
+		Product pro6 = new Product(null, "Colcha", 200.00);
+		Product pro7 = new Product(null, "Tv 4K HDR", 2600.00);
+		Product pro8 = new Product(null, "Roçadeira", 800.00);
+		Product pro9 = new Product(null, "Abajour Xiaomi", 120.00);
+		Product pro10 = new Product(null, "Pingente", 60.00);
+		Product pro11 = new Product(null, "Shampoo", 90.00);
+		
 		States st1 = new States(null, "Minas Gerais");
 		States st2 = new States(null, "São Paulo");
 
@@ -112,11 +120,25 @@ public class CursoMcApplication implements CommandLineRunner {
 		
 		// adicionando a ligação dos valores de produto a suas respectivas categorias
 		cat1.getProdutos().addAll(Arrays.asList(pro1, pro2, pro3));
-		cat2.getProdutos().addAll(Arrays.asList(pro2));
-
-		pro1.getCategorias().addAll(Arrays.asList(cat1));
-		pro2.getCategorias().addAll(Arrays.asList(cat1, cat2));
-		pro3.getCategorias().addAll(Arrays.asList(cat1));
+		cat2.getProdutos().addAll(Arrays.asList(pro2, pro4));
+		cat3.getProdutos().addAll(Arrays.asList(pro5, pro6));
+		cat4.getProdutos().addAll(Arrays.asList(pro1, pro2, pro3, pro7));
+		cat5.getProdutos().addAll(Arrays.asList(pro8));
+		cat6.getProdutos().addAll(Arrays.asList(pro9, pro10));
+		cat7.getProdutos().addAll(Arrays.asList(pro11));
+		
+		
+		pro1.getCategorias().addAll(Arrays.asList(cat1, cat4));
+		pro2.getCategorias().addAll(Arrays.asList(cat1, cat2, cat4));
+		pro3.getCategorias().addAll(Arrays.asList(cat1, cat4));
+		pro4.getCategorias().addAll(Arrays.asList(cat2));
+		pro5.getCategorias().addAll(Arrays.asList(cat3));
+		pro6.getCategorias().addAll(Arrays.asList(cat3));
+		pro7.getCategorias().addAll(Arrays.asList(cat4));
+		pro8.getCategorias().addAll(Arrays.asList(cat5));
+		pro9.getCategorias().addAll(Arrays.asList(cat6));
+		pro10.getCategorias().addAll(Arrays.asList(cat6));
+		pro11.getCategorias().addAll(Arrays.asList(cat7));
 
 		st1.getCidades().addAll(Arrays.asList(ct1));
 		st2.getCidades().addAll(Arrays.asList(ct2, ct3));
@@ -136,7 +158,7 @@ public class CursoMcApplication implements CommandLineRunner {
 		
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
-		produtoRepository.saveAll(Arrays.asList(pro1, pro2, pro3));
+		produtoRepository.saveAll(Arrays.asList(pro1, pro2, pro3, pro4, pro5, pro6, pro7, pro8, pro9, pro10, pro11));
 
 		estadoRepository.saveAll(Arrays.asList(st1, st2));
 		cidadeRepository.saveAll(Arrays.asList(ct1, ct2, ct3));
