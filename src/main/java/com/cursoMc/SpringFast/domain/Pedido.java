@@ -144,9 +144,11 @@ public class Pedido implements Serializable{
 
 	@Override
 	public String toString() {
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
 		builder.append("Pedido numero: ");
 		builder.append(getId());
 		builder.append(", instante: ");
