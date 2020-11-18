@@ -16,11 +16,14 @@ import org.springframework.stereotype.Service;
 import com.cursoMc.SpringFast.domain.City;
 import com.cursoMc.SpringFast.domain.Cliente;
 import com.cursoMc.SpringFast.domain.Endereco;
+import com.cursoMc.SpringFast.domain.enums.Perfil;
 import com.cursoMc.SpringFast.domain.enums.TipoCliente;
 import com.cursoMc.SpringFast.dto.ClienteDTO;
 import com.cursoMc.SpringFast.dto.ClienteNewDTO;
 import com.cursoMc.SpringFast.repositories.ClienteRepository;
 import com.cursoMc.SpringFast.repositories.EnderecoRepository;
+import com.cursoMc.SpringFast.security.UserSS;
+import com.cursoMc.SpringFast.services.exceptions.AuthorizationException;
 import com.cursoMc.SpringFast.services.exceptions.DataIntegrityException;
 import com.cursoMc.SpringFast.services.exceptions.ObjectNotFoundException;
 
@@ -38,6 +41,13 @@ public class ClientService {
 	
 	public Cliente find(Integer id) {
 
+		UserSS user = UserService.authenticated();
+		
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso Negado.");
+		}
+		
+		
 		Optional<Cliente> obj = repos.findById(id);
 
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
