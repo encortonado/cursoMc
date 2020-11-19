@@ -30,23 +30,22 @@ public class PedidoService {
 
 	@Autowired
 	private BoletoService boletoService;
-	
+
 	@Autowired
 	PagamentoRepository pagamentoRepository;
-	
+
 	@Autowired
 	ProdutoService produtoService;
-	
+
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-	
+
 	@Autowired
 	ClientService clienteService;
-	
+
 	@Autowired
 	private EmailService emailService;
-	
-	
+
 	public Pedido find(Integer id) {
 
 		Optional<Pedido> obj = repos.findById(id);
@@ -73,27 +72,26 @@ public class PedidoService {
 			x.setProduto(produtoService.find(x.getProduto().getId()));
 			x.setPreco(x.getProduto().getPreco());
 			x.setPedido(obj);
-			
+
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
 		// emailService.sendOrderConfirmationEmail(obj);
-		emailService.sendOrderConfirmationHtmlEmail(obj);;
-		//System.out.println(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
+		;
+		// System.out.println(obj);
 		return obj;
 	}
-	
+
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		UserSS user = UserService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso Negado");
 		}
-		
+
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		Cliente cliente = clienteService.find(user.getId());
-		
+
 		return repos.findByCliente(cliente, pageRequest);
 	}
-	
+
 }
-
-
